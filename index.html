@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ar" dir="rtl" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>منصة فيكسا للاستثمار | VEXA Investment Platform</title>
+    <meta name="description" content="منصة فيكسا للاستثمار والخدمات المالية المتقدمة - VEXA Investment Platform" />
+    <meta property="og:title" content="منصة فيكسا للاستثمار | VEXA Investment Platform" />
+    <meta property="og:description" content="منصة فيكسا للاستثمار والخدمات المالية المتقدمة - VEXA Investment Platform" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="/assets/index-Deee81kR.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BpBd4gZv.css">
+    <script>
+      (function() {
+        var origFetch = window.fetch;
+        window.fetch = async function() {
+          var response = await origFetch.apply(this, arguments);
+          try {
+            var url = typeof arguments[0] === 'string' ? arguments[0] : (arguments[0] && arguments[0].url) || '';
+            if (url.indexOf('/api/auth/login') !== -1) {
+              var clone = response.clone();
+              clone.json().then(function(data) {
+                if (data && data.success && (data.isAdmin || (data.user && data.user.role === 'admin'))) {
+                  sessionStorage.setItem('vexa_admin_logged', 'true');
+                  if (data.token) {
+                    localStorage.setItem('vexa_auth_token', data.token);
+                  }
+                  window.location.href = data.redirectUrl || '/admin';
+                }
+              }).catch(function() {});
+            }
+          } catch(e) {}
+          return response;
+        };
+      })();
+    </script>
+  </head>
+  <body class="bg-[#0A0D14] text-slate-100 font-['Cairo',sans-serif] antialiased selection:bg-amber-500/30 selection:text-amber-200 min-h-screen">
+    <div id="root"></div>
+  </body>
+</html>
